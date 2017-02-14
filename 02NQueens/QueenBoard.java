@@ -55,19 +55,19 @@ public class QueenBoard{
      */
     public void countSolutions(){
 	solutionCount = 0;
-	countH(0);	
+	getSolutionCountH(0);	
     }
 
-    public void countH(int col){;
+    public void getSolutionCountH(int col){;
 	if (col >= board.length){
 	    solutionCount ++;
 	    return;
 	}
 
-	for (int row = 0; row < size; row++){
+	for (int row = 0; row < board.length; row++){
 	    if (board[row][col] == 0){
 		addQueen(row, col);
-		countH(col+1);
+		getSolutionCountH(col+1);
 		removeQueen(row, col);
 	    }
 	}
