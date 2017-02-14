@@ -9,7 +9,7 @@ public class QueenBoard{
     public static void main (String[]args){
 	QueenBoard q = new QueenBoard(8);
 	//q.solveH(0);
-	q.countSolutions();
+	//q.countSolutions();
 	System.out.println(q.getSolutionCount());
     }
 
@@ -75,6 +75,7 @@ public class QueenBoard{
 	
 
     public int getSolutionCount(){
+	countSolutions();
 	return solutionCount;
     }
        
