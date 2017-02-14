@@ -1,14 +1,16 @@
 public class QueenBoard{
     private int[][]board;
-    private int solutionCount;
+    private int solutionCount = 0;
     private int numQueens = 0;
+
     public QueenBoard(int size){
 	board = new int[size][size];
     }
     public static void main (String[]args){
-	QueenBoard q = new QueenBoard(4);
-	q.solveH(0);
-	System.out.println(q);
+	QueenBoard q = new QueenBoard(8);
+	//q.solveH(0);
+	q.countSolutions();
+	System.out.println(q.getSolutionCount());
     }
 
     /**
@@ -22,13 +24,14 @@ public class QueenBoard{
      */
     public boolean solve()
     {
-	return solveH(0);
+	return (solveH(0));
     }
 
     private boolean solveH(int col){
 	//basecase?
 	if (numQueens == board.length){
 	    return true;
+	    
 	}else{
 	    for (int row = 0; row < board.length; row++){
 		if(board[row][col] == 0){
@@ -50,9 +53,34 @@ public class QueenBoard{
      *@return the number of solutions found, or -1 if the board was never solved.
      *The board should be reset after this is run.    
      */
-    public int getSolutionCount(){
-    	return -1;
+    public void countSolutions(){
+	solutionCount = 0;
+	countH(0);	
     }
+
+    public void countH(int col){;
+	if (col >= board.length){
+	    solutionCount ++;
+	    return;
+	}
+
+	for (int row = 0; row < size; row++){
+	    if (board[row][col] == 0){
+		addQueen(row, col);
+		countH(col+1);
+		removeQueen(row, col);
+	    }
+	}
+    }
+	
+
+    public int getSolutionCount(){
+	return solutionCount;
+    }
+       
+    
+
+
     
     /**toString
      *and all nunbers that represent queens are replaced with 'Q' 
