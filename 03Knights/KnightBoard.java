@@ -3,7 +3,7 @@ public class KnightBoard{
     private int[][]board;
 
     public static void main (String[]args){
-	KnightBoard k = new KnightBoard(4, 4);
+	KnightBoard k = new KnightBoard(5, 5);
 	k.solve();
 	System.out.println(k);
     }
@@ -52,51 +52,62 @@ public class KnightBoard{
     }
 
     private boolean solveH(int row, int col, int level){
-	//System.out.println(row+col+level);
-	if (level == (board.length * board[0].length)){
-	    System.out.println("1");
+	//System.out.println(level);
+	if (level > (board.length * board[0].length)){
+	    //System.out.println(level);
+	    
 	    return true;
-	}else{
+	}
 	    if(board[row][col] == 0){
-		System.out.println(level);
+		//System.out.println(level);
 		board[row][col] = level;
-		System.out.println(this);
+		/*
+		if (level == 15) {
+		    System.out.println("-------------");
+		    System.out.println(this);
+		}
+		*/
 		if (canMove(row, col, 1, -2) && solveH(row + 1, col -2, level + 1)){
 		    //System.out.println("1");
 		    return true;
 		}
-		else if(canMove(row, col, 2, -1) && solveH(row + 2, col -1, level + 1)){
+		if(canMove(row, col, 2, -1) && solveH(row + 2, col -1, level + 1)){
 		    //System.out.println("2");
 		    return true;
 		}
-		else if (canMove(row, col, 2, 1)&&solveH(row + 2, col + 1, level + 1)){
+		if (canMove(row, col, 2, 1)&&solveH(row + 2, col + 1, level + 1)){
 		    //System.out.println("3");
 		    return true;
 		}
-		else if (canMove(row, col, 1, 2)&&solveH(row + 1, col +2, level + 1)){
+	        if (canMove(row, col, 1, 2)&&solveH(row + 1, col +2, level + 1)){
 		    //System.out.println("4");
 		    return true;
 		}
-		else if (canMove(row, col, -2, -1)&&solveH(row -2, col -1, level + 1)){
+		if (canMove(row, col, -2, -1)&&solveH(row -2, col -1, level + 1)){
 		    //System.out.println("5");
 		    return true;
 		}
-		else if (canMove(row, col, -1, -2)&&solveH(row -1, col -2, level + 1)){
+		if (canMove(row, col, -1, -2)&&solveH(row -1, col -2, level + 1)){
 		    //System.out.println("6");
 		    return true;
 		}
-		else if (canMove(row, col, 2, -1)&&solveH(row + 2, col -1, level + 1)){
+		if (canMove(row, col, 2, -1)&&solveH(row + 2, col -1, level + 1)){
 		    //System.out.println("7");
 		    return true;
 		}
-		else if (canMove(row, col, -1, 2)&&solveH(row - 1, col +2, level + 1)){
+		if (canMove(row, col, -1, 2)&&solveH(row - 1, col +2, level + 1)){
 		    //System.out.println("8");
 		    return true;
 		}
+		board[row][col] = 0;
 	    }
-	}
+	    //ard[row][col] = 0;
+	    
+	    //return false;
+	    
+	
 	//System.out.println("solveH doesnt work");
-	board[row][col] = 0;
+	//System.out.println("false");
 	return false;
     }
 
