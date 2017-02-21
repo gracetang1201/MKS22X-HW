@@ -10,6 +10,9 @@ public class KnightBoard{
     public KnightBoard(int startingRows,int startingCols) {
 	board = new int[startingRows][startingCols];
     }
+    public static String name(){
+	return "Tang,Grace";
+    }
 
     public String toString(){
 	String ans = "";
