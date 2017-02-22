@@ -26,6 +26,9 @@ public class QueenBoard{
     {
 	return (solveH(0));
     }
+    public static String name(){
+	return "Tang,Grace";
+    }
 
     private boolean solveH(int col){
 	//basecase?
