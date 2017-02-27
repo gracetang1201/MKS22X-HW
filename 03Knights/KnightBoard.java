@@ -3,7 +3,7 @@ public class KnightBoard{
     private int[][]board;
 
     public static void main (String[]args){
-	KnightBoard k = new KnightBoard(5, 5);
+	KnightBoard k = new KnightBoard(6,5);
 	k.solve();
 	System.out.println(k);
     }
@@ -44,7 +44,9 @@ public class KnightBoard{
 	if(currentr+newrd<0 ||
 	   currentc+newcd<0 ||
 	   currentr+newrd>board.length-1 ||
-	   currentc+newcd>board.length-1){
+	   //currentr+newrd>board[0].length-1 ||
+	   //currentc+newcd>board.length-1 ||
+	   currentc+newcd>board[0].length-1){
 	   //board[newrd+currentr][currentc+newcd] != 0){
 	    //System.out.println("" + currentr + currentc + newrd + newcd);
 	    return false;
