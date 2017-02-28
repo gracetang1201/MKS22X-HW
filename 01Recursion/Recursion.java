@@ -16,6 +16,9 @@ public class Recursion{
 	if(n<0){
 	    throw new IllegalArgumentException("you can't squareroot a negative");
 	}
+	if(closeEnough(0, n)){
+	    return 0.0;
+	}
 	return squareroot(n, n/2);
     }
     public static double squareroot(double n, double guess){
