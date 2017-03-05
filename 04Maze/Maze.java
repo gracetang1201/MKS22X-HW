@@ -12,7 +12,7 @@ public class Maze{
 
     public static void main (String[]args) throws FileNotFoundException, InterruptedException{
 	Maze f;
-	f = new Maze("data1.txt");//true animates the maze.
+	f = new Maze("data2.txt");//true animates the maze.
 	f.solve();
 	System.out.println(f);
     }
@@ -48,25 +48,8 @@ public class Maze{
 		board[i][c] = line.charAt(c);
             }
 	}
-	System.out.println(this);
-	/*
-	for (int r = 0; r < height; r++){
-	    for (int c = 0; c < length; c++){
-		if (board[r][c] == 'S'){
-		    scount++;
-		}
-		if (board[r][c] == 'E'){
-		    ecount++;
-		}
-		if (scount == 1 && ecount == 1){
-		    System.out.println("yes");
-		}else{
-		    System.out.println("S and E are wrong");
-		    System.exit(1);
-		}
-	    }
-	}
-	*/
+	//System.out.println(this);
+
     }
 
     public void setAnimate(boolean b){
@@ -119,47 +102,55 @@ public class Maze{
     */
     public boolean canMove(int nrow, int ncol){
 	//# means hasn't been visited; o means has been visited
-	if(board[nrow][ncol] != ' '){
-	    return false;
-	}else{
+	if(board[nrow][ncol] == ' ' ||
+	   board[nrow][ncol] == 'E'){
 	    return true;
+	}else{
+	    return false;
 	}
+	/*   
+	     if(board[nrow][ncol] != ' '){
+	     return false;
+	     }else{
+	     return true;
+	     }
+	*/
     }
     private boolean solveH(int row, int col)throws InterruptedException{
         if(animate){
-            System.out.println(this);
+            //System.out.println(this);
             wait(20);
 	}
 	if(board[row][col] == 'E'){
+	    //System.out.println("reaches e");
 	    return true;
 	}else{
-		board[row][col] = '@';
-		if(canMove(row+1, col)&&solveH(row+1,col)){
-		    //board[row][col] = '@';
+	    board[row][col] = '@';
+	    if(canMove(row+1, col)&&solveH(row+1,col)){
+		//board[row][col] = '@';
+		return true;
+	    }else{
+		if(canMove(row, col+1)&&solveH(row,col+1)){
+		    // board[row][col] = '@';
 		    return true;
 		}else{
-		    if(canMove(row, col+1)&&solveH(row,col+1)){
-			// board[row][col] = '@';
+		    if(canMove(row-1, col)&&solveH(row-1,col)){
+			//board[row][col] = '@';
 			return true;
 		    }else{
-			if(canMove(row-1, col)&&solveH(row-1,col)){
+			if(canMove(row, col-1)&&solveH(row,col-1)){
 			    //board[row][col] = '@';
 			    return true;
 			}else{
-			    if(canMove(row, col-1)&&solveH(row,col-1)){
-				//board[row][col] = '@';
-				return true;
-			    }else{
-				board[row][col] = '.';
-				return false;
+			    board[row][col] = '.';
+				
+			    return false;
 			    
-			    }
 			}
 		    }
 		}
 	    }
 	}
-    
-
     }
+}
 
