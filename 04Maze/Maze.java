@@ -13,8 +13,8 @@ public class Maze{
     public static void main (String[]args) throws FileNotFoundException, InterruptedException{
 	Maze f;
 	f = new Maze("data2.txt");//true animates the maze.
-	f.solve();
-	System.out.println(f);
+	System.out.println(f.solve());
+	//System.out.println(f);
     }
 
     public Maze(String filename)throws FileNotFoundException{
