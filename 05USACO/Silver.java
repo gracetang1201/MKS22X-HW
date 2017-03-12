@@ -4,10 +4,12 @@ import java.io.FileNotFoundException;
 public class Silver{
     private int[][]land;
     private int[][]land1;
-    private int startx, starty, endx, endy;
+    private static int startx, starty, endx, endy, seconds;
     public static void main(String[]args){
 	Silver s = new Silver();
 	s.importFile("file1.txt");
+	System.out.println(s);
+	System.out.println(s.solve());
 	System.out.println(s);
     }
     
@@ -25,7 +27,7 @@ public class Silver{
 	int ro = s.nextInt();
 	//System.out.println(ro);
 	int co = s.nextInt();
-	int seconds = s.nextInt();
+	seconds = s.nextInt();
 	land = new int[ro][co];
 	land1 = new int[ro][co];
 	String spacer = s.nextLine();
@@ -54,6 +56,51 @@ public class Silver{
 	land1[startx][starty] = 1;
 	
     }
+
+    public int move(int row, int col){
+	int count = 0;
+	if(!(land[row][col] == -1)){
+	    if(land[row][col] == 0){
+		if(row - 1 >= 0 && !(land[row-1][col]== -1)){
+		    count += land[row-1][col];
+		    //land[row-1][col] += land[row][col];
+		}
+		if (row + 1 < land.length && !(land[row+1][col] == -1)){
+		    count += land[row+1][col];
+		    //land[row+1][col] += land[row][col];
+		}
+		if (col - 1 >= 0 && !(land[row][col-1] == -1)){
+		    count += land[row][col-1];
+		    //land[row][col-1] += land[row][col-1];
+		}
+		if(col+1<land[0].length && !(land[row][col+1] == -1)){
+		    count += land[row][col+1];
+		    //land[row][col+1] += land[row][col+1];
+		}
+	    }else{
+		land1[row][col] = 0;
+	    }
+	    
+	}
+	return count;
+    }
+
+
+
+    public int solve(){
+	for(int time = 0; time<=seconds; time++){
+	    for(int r = 0; r < land.length; r++){
+		for(int c = 0; c < land[0].length; c++){
+		    
+		    land1[r][c] = move(r, c);
+			
+		    }
+		}
+	    }
+	  return land1[endx][endy];  
+	}
+    //return land1[endx][endy];
+    
 
     public String toString(){
 	String ans = "";
