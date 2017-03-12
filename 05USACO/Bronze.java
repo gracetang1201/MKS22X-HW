@@ -72,7 +72,7 @@ public class Bronze{
 		vol = vol + elevations[r][c];
 	    }
 	}
-	return vol;
+	return vol*72*72;
     }
     /*
     public static String toString(int[][] twoDArray){
