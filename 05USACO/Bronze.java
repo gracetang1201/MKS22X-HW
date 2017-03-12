@@ -19,7 +19,8 @@ public class Bronze{
 			{20, 20, 14, 14, 20, 20}};
 	Bronze n = new Bronze();
 	try{
-	    n.importFile("file.txt");
+	    System.out.println(n.makelake("file.txt"));
+	    //System.out.println(n);
 	    //toString(elevations);
 	}catch (FileNotFoundException e){
 	}
@@ -31,7 +32,7 @@ public class Bronze{
         //System.out.println(toString(a.elevations));
  
     }
-    public void importFile(String filename) throws FileNotFoundException{
+    public int makelake(String filename) throws FileNotFoundException{
 	
 	
         File f = new File(filename);
@@ -50,18 +51,28 @@ public class Bronze{
                 elevations[r][c] = s.nextInt();
             }
         }
+	
 	for (int z = 0; z <= nc; z++){
-	    stomp(s.nextInt(), s.nextInt(), s.nextInt());
+	    while(s.hasNextInt()){
+		stomp(s.nextInt(), s.nextInt(), s.nextInt());
+	    }
 	}
-	if (int i = 0; i < elevations.length; i++){
-	    if (int x = 0; x < elevations[i].length; x++){
+	for (int i = 0; i < elevations.length; i++){
+	    for (int x = 0; x < elevations[i].length; x++){
 		if(elevations[i][x] >= el){
 		    elevations[i][x] = 0;
 		}else{
-		    elevations[i][x] = el - elevations[i][j];
+		    elevations[i][x] = el - elevations[i][x];
 		}
 	    }
 	}
+	int vol = 0;
+	for(int r = 0; r < elevations.length; r++){
+	    for(int c = 0; c < elevations[r].length; c++){
+		vol = vol + elevations[r][c];
+	    }
+	}
+	return vol;
     }
     /*
     public static String toString(int[][] twoDArray){
@@ -76,11 +87,27 @@ public class Bronze{
         return o;
     }
     */
+    public String toString(){
+	String ans = "";
+	for(int r = 0; r < elevations.length; r++){
+	    for(int c = 0; c < elevations[r].length; c++){
+		if(c == elevations[r].length-1){
+		    ans = ans + " " + elevations[r][c] + "\n";
+		}else{
+		    ans = ans + " " + elevations[r][c];
+	    }
+	    
+	}
+    }
+	return ans;
+    }
     public void stomp(int row, int col, int depth){
+	/*
 	try{
 	    importFile("file.txt");
 	}catch (FileNotFoundException e){
 	}
+	*/
         int biggest = 0;
         for (int findRow = row - 1; findRow < row + 2; findRow++){
             for (int findCol = col - 1; findCol < col + 2; findCol++){
