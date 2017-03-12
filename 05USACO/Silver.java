@@ -28,6 +28,7 @@ public class Silver{
 	//System.out.println(ro);
 	int co = s.nextInt();
 	seconds = s.nextInt();
+	System.out.println(seconds);
 	land = new int[ro][co];
 	land1 = new int[ro][co];
 	String spacer = s.nextLine();
@@ -58,7 +59,8 @@ public class Silver{
     }
 
     public int move(int row, int col){
-	int count = 0;
+	int count = land[row][col];
+	//land[row][col] = 0;
 	if(!(land[row][col] == -1)){
 	    if(land[row][col] == 0){
 		if(row - 1 >= 0 && !(land[row-1][col]== -1)){
@@ -77,6 +79,7 @@ public class Silver{
 		    count += land[row][col+1];
 		    //land[row][col+1] += land[row][col+1];
 		}
+		
 	    }else{
 		land1[row][col] = 0;
 	    }
@@ -88,30 +91,49 @@ public class Silver{
 
 
     public int solve(){
-	for(int time = 0; time<=seconds; time++){
+	int time = 1;
+	//for(int time = 1; seconds==time; time++){
+	    while(time<=seconds){
 	    for(int r = 0; r < land.length; r++){
 		for(int c = 0; c < land[0].length; c++){
-		    
-		    land1[r][c] = move(r, c);
-			
+		    if(!(land[r][c] == 0)){
+			land1[r][c] = move(r, c);
+		    }else{
+			    
+			land1[r][c] = -1;
 		    }
+		    if(!(land[r][c] == -1)){
+			if(land[r][c] == 0){
+			    land1[r][c] = move(r, c);
+			}else{
+			    land1[r][c] = 0;
+			}
+		    }else{
+			land1[r][c] = -1;
+		    }
+		    //land1[row][col] = 0;
 		}
 	    }
-	  return land1[endx][endy];  
+	    time++;
 	}
+	//return land1[endx][endy];  
+	
+	return land1[endx][endy];  
+	
+    }
     //return land1[endx][endy];
     
 
     public String toString(){
 	String ans = "";
-	for(int r = 0; r < land.length; r++){
-	    for(int c = 0; c < land[r].length; c++){
+	for(int r = 0; r < land1.length; r++){
+	    for(int c = 0; c < land1[r].length; c++){
 	
-		if(c == land[r].length-1){
+		if(c == land1[r].length-1){
 		   
-		    ans = ans + " " + land[r][c] + "\n";
+		    ans = ans + " " + land1[r][c] + "\n";
 		}else{
-		    ans = ans + " " + land[r][c];
+		    ans = ans + " " + land1[r][c];
 		}
 	    
 	    }
