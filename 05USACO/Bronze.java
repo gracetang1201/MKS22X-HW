@@ -19,7 +19,7 @@ public class Bronze{
 			{20, 20, 14, 14, 20, 20}};
 	Bronze n = new Bronze();
 	try{
-	    System.out.println(n.makelake("file.txt"));
+	    System.out.println(n.Bronze("makelake.in"));
 	    //System.out.println(n);
 	    //toString(elevations);
 	}catch (FileNotFoundException e){
@@ -32,7 +32,10 @@ public class Bronze{
         //System.out.println(toString(a.elevations));
  
     }
-    public int makelake(String filename) throws FileNotFoundException{
+    public String name(){
+	return "Grace Tang 6";
+    }
+    public int Bronze(String filename) throws FileNotFoundException{
 	
 	
         File f = new File(filename);
