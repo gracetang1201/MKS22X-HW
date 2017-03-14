@@ -7,9 +7,9 @@ public class Silver{
     private static int startx, starty, endx, endy, seconds;
     public static void main(String[]args){
 	Silver s = new Silver();
-	s.importFile("file1.txt");
+	//s.importFile("file1.txt");
 	//System.out.println(s);
-	System.out.println(s.solve());
+	System.out.println(s.silver());
 	//System.out.println(s.solve());
 	//System.out.println(s.move(0, 0));
 	//System.out.println(s);
@@ -30,7 +30,7 @@ public class Silver{
 	//System.out.println(ro);
 	int co = s.nextInt();
 	seconds = s.nextInt();
-	System.out.println(seconds);
+	//System.out.println(seconds);
 	land = new int[ro][co];
 	land1 = new int[ro][co];
 	String spacer = s.nextLine();
@@ -52,12 +52,15 @@ public class Silver{
 	starty = s.nextInt()-1;
 	endx = s.nextInt()-1;
 	endy = s.nextInt()-1;
-	System.out.println("" + startx + starty + endx + endy);
+	//System.out.println("" + startx + starty + endx + endy);
 
 	//DO STUFF HERE:
 	land[startx][starty] = 1;
 	land1[startx][starty] = 1;
 	
+    }
+    public String name(){
+	return "Grace Tang 6";
     }
 
    public int move(int r, int c){
@@ -77,7 +80,8 @@ public class Silver{
 	}
 	return total; 
     }
-    public int solve(){
+    public int silver(String filename){
+	importFile(filename);
 	for (int steps = 0; steps < seconds; steps++){
 	    for(int r = 0; r < land.length; r++){
 		for(int c = 0; c < land[r].length; c++){

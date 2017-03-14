@@ -41,12 +41,12 @@ public class Bronze{
         File f = new File(filename);
         Scanner s = new Scanner(f);
 	int ro = s.nextInt();
-
+	//System.out.println(ro);
 	int co = s.nextInt();
-       
+	//System.out.println(co);
         elevations = new int[ro][co];
         int el = s.nextInt();
-    
+	//System.out.println(el);
         int nc = s.nextInt();
 
         for(int r = 0; r < elevations.length; r++){
