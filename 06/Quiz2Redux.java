@@ -15,6 +15,9 @@ public class Quiz2Redux{
 	Collections.sort(words);
 	return words;
     }
+    public String name(){
+	return "Grace Tang 6";
+    }
   
     private static void help( ArrayList<String> words, String s, int i){
 	int len = words.size();
