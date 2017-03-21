@@ -114,7 +114,7 @@ public class USACO{
 	return ans;
     }
     */
-    public int Bronze(String filename) throws FileNotFoundException{
+    public int bronze(String filename) throws FileNotFoundException{
 	
 	
         File f = new File(filename);
