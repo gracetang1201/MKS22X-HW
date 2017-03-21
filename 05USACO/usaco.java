@@ -2,7 +2,7 @@ import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-public class usaco{
+public class USACO{
     private int[][]land;
     private static int startx, starty, endx, endy, seconds;
     private int[][]land1;
