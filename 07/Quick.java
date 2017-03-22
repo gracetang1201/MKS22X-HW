@@ -2,7 +2,7 @@ import java.util.*;
 public class Quick{
     public static void main(String[]args){
 	int[]ary = {10, 5,5,5,55,5,5,5,55,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,55, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5};
-        qsh(ary, 0 , ary.length-1);
+        //qsh(ary, 0 , ary.length-1);
 	System.out.println(toString(ary));
     }
     public static int part( int[]data, int start, int end ){
@@ -87,7 +87,7 @@ public class Quick{
 	return ans;
     }
 
-    public static void qsh(int[]a, int start, int end){
+    public static void QuickH(int[]a, int start, int end){
 	/*
 	  if(end<=start){
 	  return;
@@ -115,7 +115,14 @@ public class Quick{
 	}
     
     }
-
+    public static void quicksort(int[]ary){
+	QuickH(ary, 0, ary.length-1);
+    }
+    public int void quickselect(int[]ary, int k){
+	quicksort(ary);
+	return ary[k];
+    }
+    /*
     public static void newQuick(int[]a){
 	int i = 0;
 	int lt = 1;
@@ -143,6 +150,7 @@ public class Quick{
 	    }
 	}
     }
+    */
 
     public static void swap(int[]a, int b, int c){
 	int temp = a[b];
