@@ -2,7 +2,7 @@ import java.util.*;
 public class Quick{
     public static void main(String[]args){
 	int[]ary = {10, 5,5,5,55,5,5,5,55,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,55, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5};
-        //qsh(ary, 0 , ary.length-1);
+        qsh(ary, 0 , ary.length-1);
 	System.out.println(toString(ary));
     }
     public static int part( int[]data, int start, int end ){
@@ -65,6 +65,7 @@ public class Quick{
 	Random r = new Random();
 	int vpos = r.nextInt(end - start) + start;
 	int vvalue = a[vpos];
+	//swap(a, 0, vpos);
 	int i = start;
 	int lt = start;
 	int gt = end;
@@ -82,12 +83,12 @@ public class Quick{
 		gt--;
 	    }
 	}
-	ans[1] = lt;
+	ans[0] = lt;
 	ans[1] = gt;
 	return ans;
     }
 
-    public static void QuickH(int[]a, int start, int end){
+    public static void qsh(int[]a, int start, int end){
 	/*
 	  if(end<=start){
 	  return;
@@ -116,9 +117,9 @@ public class Quick{
     
     }
     public static void quicksort(int[]ary){
-	QuickH(ary, 0, ary.length-1);
+	qsh(ary, 0, ary.length-1);
     }
-    public int void quickselect(int[]ary, int k){
+    public static int quickselect(int[]ary, int k){
 	quicksort(ary);
 	return ary[k];
     }
