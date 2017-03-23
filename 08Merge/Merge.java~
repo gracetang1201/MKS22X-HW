@@ -1,0 +1,37 @@
+public class Mergesort{
+    public static void main(String[]args){
+	int[]ary1 = {1, 6, 5, 4};
+	int[]ary2 = {2, 3, 4};
+	System.out.println(Merge(ary1, ary2);
+    }
+    public static void Merge(int[]a, int[]b){
+	int ai = 0;
+	int bi = 0;
+	int counter = 0;
+	int[]ans = new int[a.length + b.length];
+	while(ai != a.length || b != b.length){
+	    if(ai > a.length-1){
+		for(int i = bi; i < b.length; i++){
+		    ans[counter] = b[i];
+		    counter++;
+		}
+	    }
+	    else if (bi > b.length-1){
+		for(int i = ai; i < a.length; i++){
+		    ans[counter] = a[i];
+		    counter++;
+		}
+	    }
+	    else if (a[ai] < b[bi]){
+		ans[counter] = a[ai];
+		counter++;
+		ai++;
+	    }else{
+		ans[counter] = b[bi];
+		counter++;
+		bi++;
+	    }
+	}
+	
+    }
+}
