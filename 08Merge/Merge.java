@@ -6,7 +6,8 @@ public class Merge{
 	int[]ary4 = {1, 9, 7, 4, 3, 5, 6, 10, 11};
 	//Merge(ary1, ary2);
 	//System.out.println(toString(Merge(ary1, ary2)));
-	System.out.println(toString(sorthelper(ary4)));
+	System.out.println(toString(mergesort(ary4)));
+	//System.out.println(toString(mergesort(ary4)));
     }
     public static String toString(int[]arr){
 	String ans = "";
@@ -15,38 +16,39 @@ public class Merge{
 	}
 	return ans;
     }
-    public static int[] Merge(int[]a, int[]b){
+    public static int[] Merge(int[]a, int[]b, int[]d){
 	int ai = 0;
 	int bi = 0;
 	int counter = 0;
-	int[]ans = new int[a.length + b.length];
-	while(counter != ans.length){
+	//int[]ans = new int[a.length + b.length];
+	d = new int[a.length + b.length];
+	while(counter != d.length){
 	    if(ai > a.length-1){
 		for(int i = bi; i < b.length; i++){
-		    ans[counter] = b[i];
+		    d[counter] = b[i];
 		    counter++;
 		}
 	    }
 	    else if (bi > b.length-1){
 		for(int i = ai; i < a.length; i++){
-		    ans[counter] = a[i];
+		    d[counter] = a[i];
 		    counter++;
 		}
 	    }
 	    else if (a[ai] < b[bi]){
-		ans[counter] = a[ai];
+		d[counter] = a[ai];
 		counter++;
 		ai++;
 	    }else{
-		ans[counter] = b[bi];
+		d[counter] = b[bi];
 		counter++;
 		bi++;
 	    }
 	}
-	return ans;
+	return d;
 	
     }
-    public static int[] sorthelper(int[]a){
+    public static int[] mergesort(int[]a){
 	if (a.length == 1){
 	    return a;
 	}else{
@@ -58,9 +60,10 @@ public class Merge{
 	    for(int i = a.length/2; i < a.length; i++){
 		ary2[i-a.length/2] = a[i];
 	    }
-	    return Merge(sorthelper(ary1), sorthelper(ary2));
+	    return Merge(mergesort(ary1), mergesort(ary2), a);
 			     
 	
+	}
     }
-}
+
 }
