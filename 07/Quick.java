@@ -2,9 +2,17 @@ import java.util.*;
 public class Quick{
     public static void main(String[]args){
 	int[]ary = {10, 5,5,5,55,5,5,5,55,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,55, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5};
-        qsh(ary, 0 , ary.length-1);
-	System.out.println(toString(ary));
+        
+	//System.out.println(toString(ary));
+	int[]ary1 = new int[100];
+	for(int i = 0; i < ary1.length; i++){
+	    ary1[i] = (int)(Math. random() * 50 + 1);
+	}
+	quicksort(ary1);
+	//System.out.println(Arrays);
+	System.out.println(Arrays.toString(ary1));
     }
+    /*
     public static int part( int[]data, int start, int end ){
 	//returns the ending pivotposition
 	//END IS EXCLUSIVE
@@ -51,7 +59,8 @@ public class Quick{
     public static int quick(int[] data, int k){
 	return partition(data, 0, data.length, k);
     }
-
+    */
+    /*
     public static String toString(int[]ary){
 	String ans = "";
 	for(int n = 0; n < ary.length; n++){
@@ -59,6 +68,7 @@ public class Quick{
 	}
 	return ans;
     }
+    */
 
     public static int[] newpartition(int[]a, int start, int end){
 	int[] ans = new int[2];
@@ -83,9 +93,12 @@ public class Quick{
 		gt--;
 	    }
 	}
-	ans[0] = lt;
-	ans[1] = gt;
-	return ans;
+	int[] temp = new int[2];
+	temp[0] = lt;
+	temp[1] = gt;
+	//System.out.println(Arrays.toString(temp));
+	//System.out.println(Arrays.toString(a));
+	return temp;
     }
 
     public static void qsh(int[]a, int start, int end){
@@ -107,13 +120,14 @@ public class Quick{
 	  qsh(data, start, end-1);
 	  }
 	*/
-	if(start < end){
-	    int lt = newpartition(a, start, end)[0];
-	    int gt = newpartition(a, start, end)[1];
-	    qsh(a, start, lt-1);
-	    qsh(a, gt+1, end);
-	
+	if(start >= end){
+	    return;
 	}
+	int[] temp = newpartition(a, start, end);
+	int low = temp[0];
+	int high = temp[1];
+	qsh(a, start, low - 1);
+	qsh(a, high + 1, end);
     
     }
     public static void quicksort(int[]ary){
@@ -158,6 +172,7 @@ public class Quick{
 	a[b] = a[c];
 	a[c] = temp;
     }
+    
     
     
     
