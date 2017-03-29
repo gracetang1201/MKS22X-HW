@@ -1,0 +1,28 @@
+public class MyLinkedList{
+    LNode start;
+    int size = 0;
+    class LNode{
+	int value = 0;
+	LNode next = null;
+	public LNode(int val, LNode n){
+	    value = val;
+	    next = n;
+	}
+	public LNode getNext(LNode n){
+	    return next;
+	}
+	
+    }
+
+    public void add(int pos, LNode l){
+	l.next = 
+    }
+    public LNode getNode(int in){
+	LNode n = start;
+	for(int i = 0; i < in; i++){
+	    n = n.getNext();
+	}
+	return n;
+    }
+
+}
