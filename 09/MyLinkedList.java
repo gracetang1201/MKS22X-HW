@@ -4,7 +4,7 @@ public class MyLinkedList{
 	//LNode l = new LNode(1);
 	m.add(0, 2);
 	m.add(1, 3);
-	m.add(2, 4);
+	m.add(1, 4);
 	m.add(5);
 	//System.out.println("should be 3:");
 	//System.out.println(m.get(1));
@@ -126,8 +126,16 @@ public class MyLinkedList{
     }
     public int remove(int index){
 	int ans = getNode(index).value;
-	getNode(index - 1).next = getNode(index + 1);
+	if(index == 0){
+	    start = start.next;
+	}else if(index == size-1){
+	    getNode(index-1).next = null;
+	}else{
+	    getNode(index - 1).next = getNode(index + 1);
+	}
+	size--;
 	return ans;
+    
     }
 
     
