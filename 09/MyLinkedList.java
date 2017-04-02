@@ -46,6 +46,9 @@ public class MyLinkedList{
     }
     
     public void add(int pos, int val){
+	if(pos > size || pos < 0){
+	    throw new IndexOutOfBoundsException("you can't add to negative position or outside list");
+	}
 	//first element to be added:
 	LNode n = new LNode(val);
 	if(size == 0){
@@ -75,6 +78,9 @@ public class MyLinkedList{
 	return true;
     }
     public int set(int index, int newValue){
+	if(pos >= size || pos < 0){
+	    throw new IndexOutOfBoundsException("you can't set negative position or outside list");
+	}
 	int ans = getNode(index).value;
 	getNode(index).value = newValue;
 	return ans;
@@ -109,6 +115,9 @@ public class MyLinkedList{
 	    n = n.next;
 	}
 	*/
+	if(pos >= size || pos < 0){
+	    throw new IndexOutOfBoundsException("you can't get from negative position or outside list");
+	}
 	LNode n = null;
 	n = getNode(index);
 	return n.value;
@@ -125,6 +134,9 @@ public class MyLinkedList{
 	
     }
     public int remove(int index){
+	if(pos > size || pos < 0){
+	    throw new IndexOutOfBoundsException("you can't remove from negative position or outside list");
+	}
 	int ans = getNode(index).value;
 	if(index == 0){
 	    start = start.next;
