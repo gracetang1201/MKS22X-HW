@@ -16,8 +16,10 @@ public class MyLinkedList{
     }
     LNode start;
     int size = 0;
+    LNode end;
     //------------------------------LNODE INNER CLASS-------------------
     class LNode{
+	LNode prev = null;
 	int value = 0;
 	LNode next = null;
 	public LNode(int val){
@@ -27,6 +29,11 @@ public class MyLinkedList{
 	public LNode(int val, LNode n){
 	    value = val;
 	    next = n;
+	}
+	public LNode(int val, LNode n, LNode p){
+	    value = val;
+	    next = n;
+	    prev = p;
 	}
 	/*
 	public LNode getNext(){
@@ -43,6 +50,7 @@ public class MyLinkedList{
     public MyLinkedList(){
 	size = 0;
 	start = null;
+	end = null;
     }
     
     public void add(int pos, int val){
@@ -53,15 +61,20 @@ public class MyLinkedList{
 	LNode n = new LNode(val);
 	if(size == 0){
 	    start = n;
+	    end = n;
 	    //size++;
 	}else if(pos == 0){ //add to beginning
 	    n.next = start;
 	    start = n;
 	}else if(pos == size -1){ //add to end
 	    getNode(size - 1).next = n;
+	    end = n;
 	}else{ // add to middle of list
+	    
 	    getNode(pos-1).next = n;
 	    n.next = getNode(pos);
+	    n.prev = getNode(pos-1);
+	    n.next.prev = n;
 	}
 	size++;
     }
@@ -78,7 +91,7 @@ public class MyLinkedList{
 	return true;
     }
     public int set(int index, int newValue){
-	if(pos >= size || pos < 0){
+	if(index >= size || index < 0){
 	    throw new IndexOutOfBoundsException("you can't set negative position or outside list");
 	}
 	int ans = getNode(index).value;
@@ -115,7 +128,7 @@ public class MyLinkedList{
 	    n = n.next;
 	}
 	*/
-	if(pos >= size || pos < 0){
+	if(index >= size || index < 0){
 	    throw new IndexOutOfBoundsException("you can't get from negative position or outside list");
 	}
 	LNode n = null;
@@ -134,9 +147,10 @@ public class MyLinkedList{
 	
     }
     public int remove(int index){
-	if(pos > size || pos < 0){
+	if(index > size || index< 0){
 	    throw new IndexOutOfBoundsException("you can't remove from negative position or outside list");
 	}
+	/*
 	int ans = getNode(index).value;
 	if(index == 0){
 	    start = start.next;
@@ -147,8 +161,15 @@ public class MyLinkedList{
 	}
 	size--;
 	return ans;
+	*/
+	int ans = getNode(index).value;
+	getNode(index).prev.next = getNode(index).next;
+	getNode(index).next.prev = getNode(index).prev;
+	size--;
+	return ans;
     
     }
+    
 
     
 }
