@@ -1,59 +1,162 @@
-public class MyLinkedList{
+import java.util.*;
+public class MyLinkedList implements Iterable<Integer>{
     public static void main(String[]args){
 	MyLinkedList m = new MyLinkedList();
 	//LNode l = new LNode(1);
-	m.add(0, 2);
-	m.add(1, 3);
-	m.add(1, 4);
-	m.add(5);
+	m.add(0, 10);
+	m.add(1, 5);
+	//m.add(1, 4);
+	//m.add(0, 4);
+	//m.add(5);
 	//System.out.println("should be 3:");
 	//System.out.println(m.get(1));
-	m.set(0, 99999999);
+	m.set(0, 100000000);
 	//System.out.println("should be 3");
 	//System.out.println(m.indexOf(5));
-	m.remove(1);
+	//m.remove(1);
+	System.out.println(m.iterator().hasNext());
 	System.out.println(m);
     }
+    //----------------------------- INNER CLASS LNODE
+    private class LNode{
+	LNode next,prev;
+	int value;
+	public LNode(int value){
+	    this.value=value;
+	}
+	public String toString(){
+	    return value+"";
+	}
+    }
+    //---------------------------- INNER CLASS LNODE
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //---------------------------- INNER CLASS MLLI
+    public class MLLI implements Iterator<Integer>{
+	private int index;
+	private MyLinkedList mll; 
+
+	public MLLI(MyLinkedList m, int i){
+	    index = i;
+	    mll = m;
+	}
+
+	public Integer next(){
+	    return mll.getNode(index).next.value;
+	}
+
+	public boolean hasNext(){
+	    if (mll.getNode(index).next != null){
+		return true;
+	    }
+	    return false;
+	}
+
+	public void remove(){
+	    throw new UnsupportedOperationException();
+	}
+	
+    }
+    //---------------------------INNER CLASS MLLI
+
     LNode start;
     int size = 0;
     LNode end;
-    //------------------------------LNODE INNER CLASS-------------------
-    class LNode{
-	LNode prev = null;
-	int value = 0;
-	LNode next = null;
-	public LNode(int val){
-	    value = val;
-	    next = null;
-	}
-	public LNode(int val, LNode n){
-	    value = val;
-	    next = n;
-	}
-	public LNode(int val, LNode n, LNode p){
-	    value = val;
-	    next = n;
-	    prev = p;
-	}
-	/*
-	public LNode getNext(){
-	    return next;
-	}
-	
-	public String toString(){
-	    String ans = value;
-	    return ans;
-	}
-	*/
-    }
-    //------------------------------LNODE INNER CLASS-------------------
+
     public MyLinkedList(){
 	size = 0;
 	start = null;
 	end = null;
     }
+
+    public Iterator<Integer> iterator(){
+	MLLI m = new MLLI(this, 0);
+	return m;
+    }
+    public int size(){
+	return size;
+    }
+
     
-    public void add(int pos, int val){
+    private LNode getNode(int in){
+	LNode n = start;
+	for(int i = 0; i < in; i++){
+	    n = n.next;
+	}
+	return n;
+    }
+
+
+
+    public String toString(){
+	String ans = "[";
+	for(int i = 0; i < size; i++){
+	    if(i == size - 1){
+		ans += getNode(i).value + "]";
+	    }else{
+		ans += getNode(i).value + ", ";
+	    }
+	}
+	return ans;
+	//[1, 2, 3] empty: [];
+    }
+
+    public boolean add(int val){
+	LNode n = new LNode(val);
+	add(size-1, val);
+	return true;
+    }
+
+    public int get(int index){
+	if(index >= size || index < 0){
+	    throw new IndexOutOfBoundsException("you can't get from negative position or outside list");
+	}
+	LNode n = null;
+	n = getNode(index);
+	return n.value;
+    }
+
+    public int set(int index, int newValue){
+	if(index >= size || index < 0){
+	    throw new IndexOutOfBoundsException("you can't set negative position or outside list");
+	}
+	int ans = getNode(index).value;
+	getNode(index).value = newValue;
+	return ans;
+    }
+
+    public int indexOf(int value){
+	for(int i = 0; i < size; i++){
+	    if (get(i) == value){
+		//ans = i;
+		return i;
+	    }
+	}
+	return -1;
+    }
+
+    public int remove(int index){
+	if(index > size || index< 0){
+	    throw new IndexOutOfBoundsException("you can't remove from negative position or outside list");
+	}
+
+	int ans = getNode(index).value;
+	
+	if(index == 0){
+	    start = start.next;
+	    start.prev = null;   
+	}else if(index == size - 1){
+	    end = end.prev;
+	    end.next = null;
+	}else{
+	    LNode l = getNode(index);
+	    l.prev.next = l.next;
+	    l.next.prev = l.prev;
+	}
+	size--;
+	return ans;
+    }
+
+    public void add(int pos,int val){
 	if(pos > size || pos < 0){
 	    throw new IndexOutOfBoundsException("you can't add to negative position or outside list");
 	}
@@ -64,112 +167,25 @@ public class MyLinkedList{
 	    end = n;
 	    //size++;
 	}else if(pos == 0){ //add to beginning
+       
+	    start.prev = n;
 	    n.next = start;
 	    start = n;
-	}else if(pos == size -1){ //add to end
-	    getNode(size - 1).next = n;
+	}else if(pos == size){ //add to end
+	   
+	    end.next = n;
+	    n.prev = end;
 	    end = n;
 	}else{ // add to middle of list
 	    
-	    getNode(pos-1).next = n;
+	    
+	    n.prev = getNode(pos - 1);
 	    n.next = getNode(pos);
-	    n.prev = getNode(pos-1);
-	    n.next.prev = n;
+	    getNode(pos).prev = n;
+	    getNode(pos-1).next = n;
 	}
 	size++;
     }
-    public int size(){
-	return size;
-    }
 
-    public boolean add(int val){
-	LNode n = new LNode(val);
-	//n.value = val;
-	//add(size-1, val);
-	//getNode(size-1).next = n;
-	add(size-1, val);
-	return true;
-    }
-    public int set(int index, int newValue){
-	if(index >= size || index < 0){
-	    throw new IndexOutOfBoundsException("you can't set negative position or outside list");
-	}
-	int ans = getNode(index).value;
-	getNode(index).value = newValue;
-	return ans;
-	/*
-	LNode change = new LNode();
-	for(int i = 0; i < index, i++){
-	    change = change.next;
-	}
-	*/
-	
-    }
 
-    public String toString(){
-	String ans = "";
-	for(int i = 0; i < size; i++){
-	    ans += getNode(i).value + " ";
-	}
-	return ans;
-    }
-    
-    public LNode getNode(int in){
-	LNode n = start;
-	for(int i = 0; i < in; i++){
-	    n = n.next;
-	}
-	return n;
-    }
-    public int get(int index){
-	/*
-	LNode n = start;
-	for(int i = 0; i < in; i++){
-	    n = n.next;
-	}
-	*/
-	if(index >= size || index < 0){
-	    throw new IndexOutOfBoundsException("you can't get from negative position or outside list");
-	}
-	LNode n = null;
-	n = getNode(index);
-	return n.value;
-    }
-    public int indexOf(int value){
-	//int ans = -1;
-	for(int i = 0; i < size; i++){
-	    if (get(i) == value){
-		//ans = i;
-		return i;
-	    }
-	}
-	return -1;
-	
-    }
-    public int remove(int index){
-	if(index > size || index< 0){
-	    throw new IndexOutOfBoundsException("you can't remove from negative position or outside list");
-	}
-	/*
-	int ans = getNode(index).value;
-	if(index == 0){
-	    start = start.next;
-	}else if(index == size-1){
-	    getNode(index-1).next = null;
-	}else{
-	    getNode(index - 1).next = getNode(index + 1);
-	}
-	size--;
-	return ans;
-	*/
-	int ans = getNode(index).value;
-	getNode(index).prev.next = getNode(index).next;
-	getNode(index).next.prev = getNode(index).prev;
-	size--;
-	return ans;
-    
-    }
-    
-
-    
 }
