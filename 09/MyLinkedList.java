@@ -15,6 +15,7 @@ public class MyLinkedList implements Iterable<Integer>{
 	//System.out.println(m.indexOf(5));
 	//m.remove(1);
 	System.out.println(m.iterator().hasNext());
+	System.out.println(m.size());
 	System.out.println(m);
     }
     //----------------------------- INNER CLASS LNODE
