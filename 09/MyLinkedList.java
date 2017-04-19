@@ -2,24 +2,32 @@ import java.util.*;
 public class MyLinkedList implements Iterable<Integer>{
     public static void main(String[]args){
 	MyLinkedList m = new MyLinkedList();
+	m.add(9);
+	m.add(10);
+	m.set(1, 1000000000);
+	System.out.println(m.getNode(0));
+	//m.remove(0);
+	
+   
+	
 	//LNode l = new LNode(1);
-	m.add(0, 10);
-	m.add(1, 5);
+	//m.add(0, 10);
+	//m.add(1, 5);
 	//m.add(1, 4);
 	//m.add(0, 4);
 	//m.add(5);
 	//System.out.println("should be 3:");
 	//System.out.println(m.get(1));
-	m.set(0, 100000000);
+	//m.set(0, 100000000);
 	//System.out.println("should be 3");
 	//System.out.println(m.indexOf(5));
 	//m.remove(1);
-	System.out.println(m.iterator().hasNext());
-	System.out.println(m.size());
+	//System.out.println(m.iterator().hasNext());
+	//System.out.println(m.size());
 	System.out.println(m);
     }
     //----------------------------- INNER CLASS LNODE
-    private class LNode{
+    public class LNode{
 	LNode next,prev;
 	int value;
 	public LNode(int value){
@@ -33,20 +41,21 @@ public class MyLinkedList implements Iterable<Integer>{
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //---------------------------- INNER CLASS MLLI
     public class MLLI implements Iterator<Integer>{
-	private int index;
-	private MyLinkedList mll; 
+	//private int index;
+	private MyLinkedList mll;
+	private LNode current;
 
-	public MLLI(MyLinkedList m, int i){
-	    index = i;
+	public MLLI(MyLinkedList m){
+	    current = m.start; 
 	    mll = m;
 	}
 
 	public Integer next(){
-	    return mll.getNode(index).next.value;
+	    return (current.next.value);
 	}
 
 	public boolean hasNext(){
-	    if (mll.getNode(index).next != null){
+	    if (current.next != null){
 		return true;
 	    }
 	    return false;
@@ -70,7 +79,7 @@ public class MyLinkedList implements Iterable<Integer>{
     }
 
     public Iterator<Integer> iterator(){
-	MLLI m = new MLLI(this, 0);
+	MLLI m = new MLLI(this);
 	return m;
     }
     public int size(){
@@ -89,6 +98,9 @@ public class MyLinkedList implements Iterable<Integer>{
 
 
     public String toString(){
+	if(size == 0){
+	    return "[]";
+	}
 	String ans = "[";
 	for(int i = 0; i < size; i++){
 	    if(i == size - 1){
@@ -103,7 +115,17 @@ public class MyLinkedList implements Iterable<Integer>{
 
     public boolean add(int val){
 	LNode n = new LNode(val);
-	add(size-1, val);
+        if(size == 0){
+	    start = n;
+	    end = n;
+	    size = 1;
+	}else{
+	    //add(size-1, val);
+	    LNode p = end;
+	    end = new LNode(val);
+	    p.next=end;
+	    size++;
+	}
 	return true;
     }
 
@@ -143,8 +165,9 @@ public class MyLinkedList implements Iterable<Integer>{
 	int ans = getNode(index).value;
 	
 	if(index == 0){
-	    start = start.next;
-	    start.prev = null;   
+	    LNode newstart = start.next;
+	    start = newstart;
+	    //newstart.prev = null;   
 	}else if(index == size - 1){
 	    end = end.prev;
 	    end.next = null;
