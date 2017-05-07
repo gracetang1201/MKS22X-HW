@@ -12,11 +12,15 @@ public class MyHeap{
 	m.add("D");
 	m.add("E");
 	System.out.println(m);
+	m.remove();
+	System.out.println(m);
 	b.add("A");
 	b.add("B");
 	b.add("C");
 	b.add("D");
 	b.add("E");
+	System.out.println(b);
+	b.remove();
 	System.out.println(b);
 	
 	
@@ -54,8 +58,6 @@ public class MyHeap{
 		    //System.out.println(heap[temp]);
 		    //System.out.println(heap[temp/2] + "------");
 		    swap(temp, temp/2);
-		}else{
-		    System.out.println("Did not swap" + temp);
 		}
 		temp = temp/2;
 	    }
@@ -66,8 +68,6 @@ public class MyHeap{
 		    //System.out.println(heap[temp]);
 		    //System.out.println(heap[temp/2] + "------");
 		    swap(temp, temp/2);
-		}else{
-		    System.out.println("Did not swap" + temp);
 		}
 		temp = temp/2;
 	    }
@@ -107,13 +107,13 @@ public class MyHeap{
 	if(!isMax){
 	    while(temp < lastindex / 2){
 		int s = heap[temp*2].compareTo(heap[temp*2+1]);
-		if(s >= 1){
-		    if(heap[temp].compareTo(heap[temp*2+1])<=-1){
+		if(s <= -1){
+		    if(heap[temp].compareTo(heap[temp*2+1])>=1){
 			swap(temp, temp*2+1);
 		    }
-		}else if(s <= -1){
+		}else if(s >= 1){
 	    
-		    if(heap[temp].compareTo(heap[temp*2])<=-1){
+		    if(heap[temp].compareTo(heap[temp*2])>=1){
 			swap(temp, temp*2);
 		    }
 		}
@@ -128,7 +128,7 @@ public class MyHeap{
 		    }
 		}else if(s <= -1){
 	    
-		    if(heap[temp].compareTo(heap[temp*2+1])<=-1){
+		    if(heap[temp].compareTo(heap[temp*2+1])>=-1){
 			swap(temp, temp*2+1);
 		    }
 		}
