@@ -75,6 +75,7 @@ public class MyHeap{
 
 	lastindex++;
     }
+
     public String remove(){
 	/*
 	  heap[1] = heap[lastindex-1];
@@ -106,19 +107,21 @@ public class MyHeap{
 	lastindex--;
 	if(!isMax){
 	    while(temp < lastindex / 2){
-		int s = heap[temp*2].compareTo(heap[temp*2+1]);
-		if(s <= -1){
-		    if(heap[temp].compareTo(heap[temp*2+1])>=1){
+		//int s = heap[temp*2].compareTo(heap[temp*2+1]);
+		if(heap[temp*2].compareTo(heap[temp*2+1])>=1){                                   //s >= -1){
+		    if(heap[temp].compareTo(heap[temp*2+1])>=-1){
 			swap(temp, temp*2+1);
 		    }
-		}else if(s >= 1){
+		}else{ //if(s <= 1){
 	    
-		    if(heap[temp].compareTo(heap[temp*2])>=1){
+		    if(heap[temp].compareTo(heap[temp*2])>=-1){
 			swap(temp, temp*2);
+			
 		    }
 		}
 		temp = temp*2;
 	    }
+	    
 	}else{
 	    while(temp < lastindex / 2){
 		int s = heap[temp*2].compareTo(heap[temp*2+1]);
