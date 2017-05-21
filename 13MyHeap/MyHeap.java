@@ -105,25 +105,42 @@ public class MyHeap{
 	heap[lastindex-1] = null;
 	int temp = 1;
 	lastindex--;
+	//boolean b=false;
 	if(!isMax){
-	    while(temp < lastindex / 2){
-		//int s = heap[temp*2].compareTo(heap[temp*2+1]);
-		if(heap[temp*2].compareTo(heap[temp*2+1])>=1){                                   //s >= -1){
-		    if(heap[temp].compareTo(heap[temp*2+1])>=-1){
-			swap(temp, temp*2+1);
-		    }
-		}else{ //if(s <= 1){
-	    
-		    if(heap[temp].compareTo(heap[temp*2])>=-1){
-			swap(temp, temp*2);
-			
+	    //while(!b){
+	    //b=true;
+	   
+		while(temp <= lastindex/2){
+		     if (heap[temp*2+1] == null) {
+		    if(heap[temp].compareTo(heap[temp*2])>=-1) {
+		swap(temp, temp*2);
+		break;
 		    }
 		}
-		temp = temp*2;
+		    //int s = heap[temp*2].compareTo(heap[temp*2+1]);
+		    if(heap[temp*2].compareTo(heap[temp*2+1])>=1){                                   //s >= -1){
+			if(heap[temp].compareTo(heap[temp*2+1])>=1){
+			   
+			    swap(temp, temp*2+1);
+			    //b=false;
+			}
+		    }else{ //if(s <= 1){
+	    
+			if(heap[temp].compareTo(heap[temp*2])>=1){
+			    
+			    swap(temp, temp*2);
+			    //b=false;
+			
+			}
+		    }
+		    temp = temp*2;
+		
 	    }
+	    
 	    
 	}else{
 	    while(temp < lastindex / 2){
+		
 		int s = heap[temp*2].compareTo(heap[temp*2+1]);
 		if(s >= 1){
 		    if(heap[temp].compareTo(heap[temp*2])>=-1){
