@@ -1,4 +1,9 @@
-public interface Frontier<Location>{
-    public void add(Location l);
-    public Location next();
+public interface Frontier{
+
+	public void add(Location l);
+	public Location next();
+	public Location peek();
+	public int size();
+	public boolean hasNext();
+
 }

@@ -1,58 +1,52 @@
-public class Location implements Comparable<Location> {
-    
-    private int distToGoal, distToStart, r, c;
-    private boolean aStar;
-    private Location previous;
+public class Location implements Comparable<Location>{
 
-    public Location(int row, int col, Location prev, int distS, int distE) {
-	r = row;
-	c = col;
-	previous = prev;
-	distToGoal = distE;
-	distToStart = distS;
-    }
-    
-    public Location(int row, int col, Location prev, 
-		    int distS, int distE, boolean star) {
-	r = row;
-	c = col;
-	previous = prev;
-	distToGoal = distE;
-	distToStart = distS;
-	aStar = star;
-    }
-    
-    public int getR() {
-	return r;
-    }
-    
-    public int getC() {
-	return c;
-    }
-    
-    public Location getPrev() {
-	return previous;
-    }
-    
-    public int getDistToStart() {
-	return distToStart;
-    }
-    
-    public int getDistToGoal() {
-	return distToGoal;
-    }
-    
-    public boolean getStar() {
-	return aStar;
+    int row, col, dstart, dgoal;
+    Location prev;
+    boolean astar;
+
+    public Location(){}
+
+    public Location(int r, int c, Location previous, int distToStart, int distToGoal, boolean aStar){
+        row = r;
+        col = c;
+        prev = previous;
+        dstart = distToStart;
+        dgoal = distToGoal;
+        astar = aStar;
     }
 
-    public int compareTo(Location other) {
-	if (!(this.getStar() && other.getStar())) {
-	    return this.getDistToGoal() - other.getDistToGoal();
-	}
-	return (this.getDistToStart() + this.getDistToGoal()) 
-	    - (other.getDistToStart() + other.getDistToGoal());
+    public int getRow(){
+        return row;
+    }
+
+    public int getCol(){
+        return col;
+    }
+
+    public boolean getBool(){
+        return astar;
+    }
+
+    public Location getPrev(){
+        return prev;
+    }
+
+    public void setBool(boolean bool){
+        astar = bool;
+    }
+
+    public int getDist(){
+        return dstart;
+    }
+
+    public int compareTo(Location other){
+        if (astar) return (dstart + dgoal) - (other.dstart + other.dgoal);
+        return dgoal - other.dgoal;
+    }
+
+    public String toString(){
+        if (astar) return dgoal + dstart + "";
+        return "" + dgoal;
     }
 
 }
-    

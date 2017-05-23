@@ -75,12 +75,9 @@ public class Maze{
     if(startr == -1 || endr == -1){
       System.out.println("Missing 'S' or 'E' from maze.");
       System.exit(0);
-
     }
     maxRows = maze.length;
     maxCols = maze[0].length;
-
-
     end = new Location(endr,endc,null,0,0,false);
     int d = Math.abs(endr -startr) + Math.abs(startc - endc);
     start = new Location(startr,startc,null,0,d,false);
