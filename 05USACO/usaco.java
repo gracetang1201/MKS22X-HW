@@ -8,6 +8,16 @@ public class USACO{
     private int[][]land1;
     private int[][] elevations;
 
+    public static void main(String[]args){
+	USACO u = new USACO();
+	System.out.println(u.silver("file1.txt"));
+	//try{
+	    System.out.println(u.bronze("file.txt"));
+	    //}catch (FileNotFoundException e){
+	    // System.out.println("no file found");
+	    //}
+    }
+
     public void importFile(String filename){
 	File f = new File(filename);
 	Scanner s = null;
@@ -114,9 +124,9 @@ public class USACO{
 	return ans;
     }
     */
-    public int bronze(String filename) throws FileNotFoundException{
+    public int bronze(String filename){// throws FileNotFoundException{
 	
-	
+	try{
         File f = new File(filename);
         Scanner s = new Scanner(f);
 	int ro = s.nextInt();
@@ -155,6 +165,9 @@ public class USACO{
 	    }
 	}
 	return vol*72*72;
+	} catch (FileNotFoundException e){
+	    return -1;
+	}
     }
     /*
     public String toString(){

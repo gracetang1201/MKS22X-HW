@@ -1,6 +1,6 @@
 public class QueenBoard{
     private int[][]board;
-    private int solutionCount = 0;
+    private int solutionCount = -1;
     private int numQueens = 0;
 
     public QueenBoard(int size){
@@ -78,7 +78,7 @@ public class QueenBoard{
 	
 
     public int getSolutionCount(){
-	countSolutions();
+	//countSolutions();
 	return solutionCount;
     }
        

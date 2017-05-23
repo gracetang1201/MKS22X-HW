@@ -1,52 +1,76 @@
 public class Location implements Comparable<Location>{
+    private int row;
+    private int col;
+    private Location previous;
+    private int distanceToStart;
+    private int distanceToGoal;
+    private boolean Astar;
 
-    int row, col, dstart, dgoal;
-    Location prev;
-    boolean astar;
 
-    public Location(){}
-
-    public Location(int r, int c, Location previous, int distToStart, int distToGoal, boolean aStar){
-        row = r;
-        col = c;
-        prev = previous;
-        dstart = distToStart;
-        dgoal = distToGoal;
-        astar = aStar;
+    public Location(int r, int c, Location prev,
+		    int disStart, int disGoal, boolean aStar){
+	row = r;
+	col = c;
+	previous = prev;
+	distanceToStart = disStart;
+	distanceToGoal = disGoal;
+	Astar = aStar;
     }
 
     public int getRow(){
-        return row;
+	return row;
     }
 
     public int getCol(){
-        return col;
-    }
-
-    public boolean getBool(){
-        return astar;
+	return col;
     }
 
     public Location getPrev(){
-        return prev;
+	return previous;
     }
 
-    public void setBool(boolean bool){
-        astar = bool;
-    }
-
-    public int getDist(){
-        return dstart;
+    public boolean isAstar(){
+	return Astar;
     }
 
     public int compareTo(Location other){
-        if (astar) return (dstart + dgoal) - (other.dstart + other.dgoal);
-        return dgoal - other.dgoal;
+
+	if(Astar){
+	    int dist = distanceToGoal + distanceToStart;
+	    int dist2 = other.getdistToGoal() + other.getdistToStart();
+	    if(dist < dist2){
+		return -1;
+	    }
+	    if(dist > dist2){
+		return 1;
+	    }
+	    else{
+		return 0;
+	    }
+	}
+	else{
+	    int dist = distanceToGoal;
+	    int dist2 = other.getdistToGoal();
+	    if(dist < dist2){
+		return -1;
+	    }
+	    if(dist > dist2){
+		return 1;
+	    }
+	    else{
+		return 0;
+	    }
+	}
+
     }
 
-    public String toString(){
-        if (astar) return dgoal + dstart + "";
-        return "" + dgoal;
+    public int getdistToGoal(){
+	return distanceToGoal;
     }
+
+    public int getdistToStart(){
+	return distanceToStart;
+    }
+
 
 }

@@ -4,9 +4,13 @@ public class Merge{
 	int[]ary2 = {0};
 	int[]ary3 = {};
 	int[]ary4 = {1, 9, 7, 4, 3, 5, 6, 10, 11};
+	int[]ary5 = new int[500000];
+	for(int i = 0; i < ary5.length; i++){
+	    ary5[i] = (int)Math.random();
+	}
 	//Merge(ary1, ary2);
 	//System.out.println(toString(Merge(ary1, ary2)));
-	System.out.println(toString(mergesort(ary4)));
+	System.out.println(toString(mergesort(ary5)));
 	//System.out.println(toString(mergesort(ary4)));
     }
     public static String toString(int[]arr){
@@ -21,7 +25,7 @@ public class Merge{
 	int bi = 0;
 	int counter = 0;
 	//int[]ans = new int[a.length + b.length];
-	d = new int[a.length + b.length];
+	//d = new int[a.length + b.length];
 	while(counter != d.length){
 	    if(ai > a.length-1){
 		for(int i = bi; i < b.length; i++){
@@ -60,6 +64,7 @@ public class Merge{
 	    for(int i = a.length/2; i < a.length; i++){
 		ary2[i-a.length/2] = a[i];
 	    }
+	    
 	    return Merge(mergesort(ary1), mergesort(ary2), a);
 			     
 	

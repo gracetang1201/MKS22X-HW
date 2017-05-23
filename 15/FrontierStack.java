@@ -1,23 +1,23 @@
 import java.util.*;
 
-public class FrontierQueue implements Frontier{
+public class FrontierStack implements Frontier{
     
-    private LinkedList<Location> locations;
+    private Stack<Location> locations;
     public int size;
 
-    public FrontierQueue(){
-	locations = new LinkedList<Location>();
+    public FrontierStack(){
+	locations = new Stack<Location>();
 	size = 0;
     }
     
     public void add(Location x){
-	locations.add(x);
+	locations.push(x);
 	size += 1;
     }
 
     public Location next(){
 	size -= 1;
-	return locations.removeFirst();
+	return locations.pop();
     }
 
     public int getSize(){

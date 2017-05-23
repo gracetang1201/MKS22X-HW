@@ -7,12 +7,15 @@ public class RunningMedian{
     public static void main(String[]args){
 	RunningMedian r = new RunningMedian();
 	r.add(1);
+	r.add(2);
 	r.add(3);
+	r.add(4);
 	r.add(5);
 	r.add(7);
 	r.add(9);
 	r.add(11);
 	r.add(13);
+	r.add(15);
 	//r.add(11);
 	//r.add(13);
 	//System.out.println(r.a);

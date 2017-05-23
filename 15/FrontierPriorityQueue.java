@@ -1,71 +1,97 @@
 import java.util.*;
 
-public class FrontierPriorityQueue implements Frontier<Location>{
+public class FrontierPriorityQueue implements Frontier{
 
-    private ArrayList<Location>queue;
-    private int size;
-    
-    public FrontierPriorityQueue() {
-	queue = new ArrayList<Location>();
-	queue.add(new Location(-1,-1,null,-1,-1));
-	size = 0;
+    private ArrayList<Location> data;
+
+    public FrontierPriorityQueue(){
+
+	data = new ArrayList<Location>();
+	data.add(0,null);
     }
 
-    public void add(Location l) {
-	queue.add(l);
-	size ++;
-	pushUp(size);
+    public int getSize(){
+	return data.size();
     }
 
-    public Location next() {
-	Location ret = queue.get(1);
-	queue.set(1, queue.get(size));
-	queue.remove(size);
-	size --;
-	pushDown(1);
-	return ret;
+    public void add(Location x){
+	data.add(x);
+	pushUp();
     }
 
-    private void pushUp(int index) {
-	Location temp;
-	if (index / 2 > 0 && 
-	    queue.get(index / 2).compareTo(queue.get(index)) < 0) {
-	    temp = queue.get(index / 2);
-	    queue.set(index / 2, queue.get(index));
-	    queue.set(index, temp);
-	    pushUp(index / 2);
-	}
+    public Location next(){ //remove?
+	Location temp = data.get(1);
+	data.set(1, data.get(data.size() - 1));
+	data.remove(data.size() - 1);
+	pushDown();
+	return temp;
     }
 
-    public int getSize() {
-	return size;
+    public Location peek(){
+	return data.get(1);
     }
 
-    private int checkChildren(int index) {
-	if (index * 2 > size){
-	    return -1;
+    private void pushUp(){
+	Location temp = data.get(data.size() - 1);
+	int index = data.size() - 1;
+
+	    while((index/2 > 0) &&
+		  (temp.compareTo(data.get(index/2)) < 1)){
+		swap(data, index, index/2);
+		index = index/2;
+	    }
+    }
+	
+
+    private void pushDown(){
+
+	if(data.size() == 1){
+	    return;
 	}
-        if (index * 2 + 1 > size){
-	    return index * 2;
-	}
-	if(queue.get(index * 2 + 1).compareTo(queue.get(index * 2))>0){
-	    return index * 2 + 1;
-	}
-	else{
-	    return index * 2;
+	
+	Location temp = data.get(1);
+	int index = 1;
+
+	while(
+	      (((index*2) + 1 < data.size()) &&
+	       ((temp.compareTo(data.get(index*2)) > -1) ||
+		(temp.compareTo(data.get((index*2)+1)) > -1)))
+	      ||
+	      ((index*2 < data.size()) &&
+	       ((temp.compareTo(data.get(index*2)) > -1)))
+	      ){
+		
+	    if((temp.compareTo(data.get(index*2)) > -1)&&
+	       ((index*2) + 1 >= data.size() ||
+		(data.get(index*2).compareTo(data.get((index*2) +1)) < 1)
+		)){
+		swap(data, index, index*2);
+		index = index*2;
+	    }
+	    else{
+		swap(data, index, (index*2)+1);
+		index = (index*2)+1;
+	    }
 	}
     }
-    
-    private void pushDown(int index) {
-        Location temp;
-	int whichToSwitch = checkChildren(index);
-	if (whichToSwitch != -1 &&
-	    queue.get(whichToSwitch).compareTo(queue.get(index)) > 0) {
-	    temp = queue.get(whichToSwitch);
-	    queue.set(whichToSwitch, queue.get(index));
-	    queue.set(index, temp);
-	    pushDown(whichToSwitch);
+	    
+
+
+    private void swap(ArrayList<Location> ary, int ind, int ind2){
+	Location temp = ary.get(ind);
+	ary.set(ind, ary.get(ind2));
+	ary.set(ind2, temp);
+    }
+
+    public String toString(){
+	String temp = "";
+
+	for(int i = 1; i < data.size(); i++){
+	    temp += data.get(i).getRow() + " ";
 	}
+       
+
+	return temp;
     }
 
 }

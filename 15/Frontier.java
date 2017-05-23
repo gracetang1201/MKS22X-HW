@@ -1,9 +1,9 @@
 public interface Frontier{
 
-	public void add(Location l);
-	public Location next();
-	public Location peek();
-	public int size();
-	public boolean hasNext();
+    public int getSize();
+
+    public void add(Location x);
+
+    public Location next();
 
 }
