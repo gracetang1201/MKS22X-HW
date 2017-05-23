@@ -1,101 +1,262 @@
-import java.util.*;
-import java.io.*;
+public class MazeSolver {
 
-public class MazeSolver{
-    public Maze board;
-    //private int[] solution;
-    private Location start;
-    private Location end;
-    private Frontier<Location> locations;
-    private boolean animate;
-
-    public MazeSolver(String filename){
+    private Maze board;
+    private boolean a;
+    public MazeSolver(String filename) {
 	this(filename, false);
     }
-    public MazeSolver(String filename, boolean animate){
-	
+    public MazeSolver(String filename, boolean animate) {
+	board = new Maze(filename);
+	a = animate;
     }
-    
-    public void solve(){
+   public void solve() {
 	solve(1);
     }
-    
-    public void solve(int style){
-	if(style == 0){
-	    //DFS
-	    //instantiate frontier
-	    //add starting location
-	    //process each subsequent location
-	    locations = new StackFrontier();
-	    solvehelp(false);
-	}else if(style == 1){
-	    //BFS
-	    locations = new QueueFrontier();
-	    solvehelp(false);
-	}else if(style == 2){
-	    //BestFirst
-	    locations = new FrontierPriorityQueue();
-	    solvehelp(false);
-	}else{
-	    //A*
-	    locations = new FrontierPriorityQueue();
-	    solvehelp(true);
+public void solve(int i) {
+	if (i == 0) { //DFS
+	    StackFrontier q = new StackFrontier();
+	    q.add(board.getStart());
+	    int distToStart = 0;
+	    int distToGoal = 0;
+	    while (q.getSize() > 0) {
+		Location temp = q.next();
+		if(distCalc(temp.getR(), temp.getC(), board.getEnd()) == 0){
+		    board.set(temp.getR(), temp.getC(), 'E');
+		    temp = temp.getPrev();
+		    while (!temp.getPrev().equals(board.getStart())) {
+			board.set(temp.getR(), temp.getC(), '@');
+			temp = temp.getPrev();
+			System.out.println(this);
+		    }
+		    board.set(temp.getR(), temp.getC(), '@');
+		    board.set(board.getStart().getR(), board.getStart().getC(), 'S');
+		    System.out.println(this);
+		    return;
+		}
+		try{
+		    if(board.get(temp.getR() + 1, temp.getC()) == ' '){
+			int r = temp.getR() + 1;
+			int c = temp.getC();
+		        q.add(new Location(r,c,temp,distToStart,distToGoal));
+			board.set(r,c,'?');
+		}
+		}catch (IndexOutOfBoundsException e){}
+		try{
+		    if(board.get(temp.getR() - 1, temp.getC()) == ' '){
+			int r = temp.getR() - 1;
+			int c = temp.getC();
+		        q.add(new Location(r,c,temp,distToStart,distToGoal));
+			board.set(r,c,'?');
+		    }
+		}catch (IndexOutOfBoundsException e){}
+		try{
+		    if(board.get(temp.getR(), temp.getC() + 1) == ' '){
+			int r = temp.getR();
+			int c = temp.getC() + 1;
+			q.add(new Location(r,c,temp,distToStart,distToGoal));
+			board.set(r,c,'?');
+		    }
+		}catch (IndexOutOfBoundsException e){}
+		try{
+		    if(board.get(temp.getR(), temp.getC() - 1) == ' '){
+			int r = temp.getR();
+			int c = temp.getC() - 1;
+			q.add(new Location(r,c,temp,distToStart,distToGoal));
+			board.set(r,c,'?');
+		    }
+		}catch (IndexOutOfBoundsException e){}
+		board.set(temp.getR(), temp.getC(), '.');
+		System.out.println(this);
+	    }	
 	}
-    }
-    public boolean solvehelp(boolean a){
-	Location start = board.getStart();
-	locations.add(start);
-	int row = start.getRow();
-	int col = start.getCol();
-	Location current = start;
-	while(board.get(row,col) != 'E'){
-	    if(board.get(row,col) != 'S'){
-		board.set(row,col, '.');
+	if (i == 1) { //BFS
+	    FrontierQueue q = new FrontierQueue();
+	    q.add(board.getStart());
+	    int distToStart = 0;
+	    int distToGoal = 0;
+	    while (q.getSize() > 0) {
+		Location temp = q.next();
+	        if(distCalc(temp.getR(), temp.getC(), board.getEnd()) == 0){
+		    board.set(temp.getR(), temp.getC(), 'E');
+		    temp = temp.getPrev();
+		    while (!temp.getPrev().equals(board.getStart())) {
+			board.set(temp.getR(), temp.getC(), '@');
+			temp = temp.getPrev();
+			System.out.println(this);
+		    }
+		    board.set(temp.getR(), temp.getC(), '@');
+		    board.set(board.getStart().getR(), board.getStart().getC(), 'S');
+		    System.out.println(this);
+		    return;
+		}
+		try{
+		    if(board.get(temp.getR() + 1, temp.getC()) == ' '){
+			int r = temp.getR() + 1;
+			int c = temp.getC();
+		        q.add(new Location(r,c,temp,distToStart,distToGoal));
+			board.set(r,c,'?');
+		}
+		}catch (IndexOutOfBoundsException e){}
+		try{
+		    if(board.get(temp.getR() - 1, temp.getC()) == ' '){
+			int r = temp.getR() - 1;
+			int c = temp.getC();
+		        q.add(new Location(r,c,temp,distToStart,distToGoal));
+			board.set(r,c,'?');
+		    }
+		}catch (IndexOutOfBoundsException e){}
+		try{
+		    if(board.get(temp.getR(), temp.getC() + 1) == ' '){
+			int r = temp.getR();
+			int c = temp.getC() + 1;
+			q.add(new Location(r,c,temp,distToStart,distToGoal));
+			board.set(r,c,'?');
+		    }
+		}catch (IndexOutOfBoundsException e){}
+		try{
+		    if(board.get(temp.getR(), temp.getC() - 1) == ' '){
+			int r = temp.getR();
+			int c = temp.getC() - 1;
+			q.add(new Location(r,c,temp,distToStart,distToGoal));
+			board.set(r,c,'?');
+		    }
+		}catch (IndexOutOfBoundsException e){}
+		board.set(temp.getR(), temp.getC(), '.');
+		System.out.println(this);
+	    }  	
+	}
+	if (i == 2) { //BestFirst
+	    FrontierPriorityQueue q = new FrontierPriorityQueue();
+	    q.add(board.getStart());
+	    int distToStart;
+	    int distToGoal;
+	    while (q.getSize() > 0) {
+		Location temp = q.next();
+	        if(distCalc(temp.getR(), temp.getC(), board.getEnd()) == 0){
+		    board.set(temp.getR(), temp.getC(), 'E');
+		    temp = temp.getPrev();
+		    while (!temp.getPrev().equals(board.getStart())) {
+			board.set(temp.getR(), temp.getC(), '@');
+			temp = temp.getPrev();
+			System.out.println(this);
+		    }
+		    board.set(temp.getR(), temp.getC(), '@');
+		    board.set(board.getStart().getR(), board.getStart().getC(), 'S');
+		    System.out.println(this);
+		    return;
+		}
+		distToStart = distCalc(temp.getR(), temp.getC(), board.getStart());
+		distToGoal = distCalc(temp.getR(), temp.getC(), board.getEnd());
+		try{
+		    if(board.get(temp.getR() + 1, temp.getC()) == ' '){
+			int r = temp.getR() + 1;
+			int c = temp.getC();
+		        q.add(new Location(r,c,temp,distToStart,distToGoal,false));
+			board.set(r,c,'?');
+		}
+		}catch (IndexOutOfBoundsException e){}
+		try{
+		    if(board.get(temp.getR() - 1, temp.getC()) == ' '){
+			int r = temp.getR() - 1;
+			int c = temp.getC();
+		        q.add(new Location(r,c,temp,distToStart,distToGoal,false));
+			board.set(r,c,'?');
+		    }
+		}catch (IndexOutOfBoundsException e){}
+		try{
+		    if(board.get(temp.getR(), temp.getC() + 1) == ' '){
+			int r = temp.getR();
+			int c = temp.getC() + 1;
+			q.add(new Location(r,c,temp,distToStart,distToGoal,false));
+			board.set(r,c,'?');
+		    }
+		}catch (IndexOutOfBoundsException e){}
+		try{
+		    if(board.get(temp.getR(), temp.getC() - 1) == ' '){
+			int r = temp.getR();
+			int c = temp.getC() - 1;
+			q.add(new Location(r,c,temp,distToStart,distToGoal,false));
+			board.set(r,c,'?');
+		    }
+		}catch (IndexOutOfBoundsException e){}
+		board.set(temp.getR(), temp.getC(), '.');
+		System.out.println(this);
+	    }	
+	}
+	if (i == 3) { //A*
+	    FrontierPriorityQueue q = new FrontierPriorityQueue();
+	    q.add(board.getStart());
+	    int distToStart;
+	    int distToGoal;
+	    while (q.getSize() > 0) {
+		Location temp = q.next();
+	        if(distCalc(temp.getR(), temp.getC(), board.getEnd()) == 0){
+		    board.set(temp.getR(), temp.getC(), 'E');
+		    temp = temp.getPrev();
+		    while (!temp.getPrev().equals(board.getStart())) {
+			board.set(temp.getR(), temp.getC(), '@');
+			temp = temp.getPrev();
+			System.out.println(this);
+		    }
+		    board.set(temp.getR(), temp.getC(), '@');
+		    board.set(board.getStart().getR(), board.getStart().getC(), 'S');
+		    System.out.println(this);
+		    return;
+		}
+		distToStart = distCalc(temp.getR(), temp.getC(), board.getStart());
+		distToGoal = distCalc(temp.getR(), temp.getC(), board.getEnd());
+		try{
+		    if(board.get(temp.getR() + 1, temp.getC()) == ' '){
+			int r = temp.getR() + 1;
+			int c = temp.getC();
+		        q.add(new Location(r,c,temp,distToStart,distToGoal,true));
+			board.set(r,c,'?');
+		}
+		}catch (IndexOutOfBoundsException e){}
+		try{
+		    if(board.get(temp.getR() - 1, temp.getC()) == ' '){
+			int r = temp.getR() - 1;
+			int c = temp.getC();
+		        q.add(new Location(r,c,temp,distToStart,distToGoal,true));
+			board.set(r,c,'?');
+		    }
+		}catch (IndexOutOfBoundsException e){}
+		try{
+		    if(board.get(temp.getR(), temp.getC() + 1) == ' '){
+			int r = temp.getR();
+			int c = temp.getC() + 1;
+			q.add(new Location(r,c,temp,distToStart,distToGoal,true));
+			board.set(r,c,'?');
+		    }
+		}catch (IndexOutOfBoundsException e){}
+		try{
+		    if(board.get(temp.getR(), temp.getC() - 1) == ' '){
+			int r = temp.getR();
+			int c = temp.getC() - 1;
+			q.add(new Location(r,c,temp,distToStart,distToGoal,true));
+			board.set(r,c,'?');
+		    }
+		}catch (IndexOutOfBoundsException e){}
+		board.set(temp.getR(), temp.getC(), '.');
+		System.out.println(this);
 	    }
-	    addNeighbors(current, a);
-	    if(locations.hasNext()){
-		current = locations.next();
-		row = current.getRow();
-		col = current.getCol();
-		
-	    }else{
-		return false;
-	    }
-	    
 	}
-	return true;
-    }
-    private boolean addNeighbors(Location cur, boolean a){ //int[] coords, Location cur) {
-	    int erow = end.getRow();
-	    int ecol = end.getCol();
-	    int crow = cur.getRow();
-	    int ccol = cur.getCol();
-	    int srow = start.getRow();
-	    int scol = start.getCol();
-	   
-	if (isValid(crow, ccol + 1)) {
-	    locations.add(new Location(crow, ccol + 1, cur, Math.abs(crow-srow)+Math.abs(ccol-scol-1), Math.abs(crow-erow)+Math.abs(ccol-ecol-1), a));
-	}
-	if (isValid(crow, ccol-1)) {
-	    locations.add(new Location(crow, ccol - 1, cur, Math.abs(crow-srow)+Math.abs(ccol-scol+1), Math.abs(crow-srow)+Math.abs(ccol-ecol+1), a));
-	}
-	if (isValid(crow-1, ccol)) {
-	    locations.add(new Location(crow - 1, ccol, cur, Math.abs(crow- 1-srow)+Math.abs(ccol-scol), Math.abs(crow-1-srow)+Math.abs(ccol-ecol), a));
-	}
-	if (isValid(crow + 1, ccol)) {
-	    locations.add(new Location(crow, ccol - 1, cur, Math.abs(crow-srow)+Math.abs(ccol-1-scol), Math.abs(crow-srow)+Math.abs(ccol-1-ecol), a));
-	}
-	return true;
     }
 
-    private boolean isValid(int row, int col) {
-	if (row < 0 || row >= board.getRows() || col < 0 || col >= board.getCols()) {
-	    return false;
-	} else if (board.get(row,col) == '#') {
-	    return false;
-	} else if (board.get(row,col) == '.') {
-	    return false;
-	}
-	return true;
+    public int distCalc(int r, int c, Location b){
+	return (Math.abs(b.getR() - r) + Math.abs(b.getC() - c));
     }
+
+    public String toString() {
+	if (a) {
+	    return board.toString(100);
+	}
+	return board.toString();
+    }
+
+    public static void main (String[]args) {
+	MazeSolver a = new MazeSolver("board2.txt", true);
+	a.solve(2);
+    }
+
 }

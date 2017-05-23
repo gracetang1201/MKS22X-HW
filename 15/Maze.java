@@ -10,12 +10,7 @@ public class Maze{
   Location start,end;
   private char[][]maze;
   private int maxRows,maxCols;
-  public int getRows(){
-return maxRows;
-}
-public int getCols(){
-return maxCols;
-}
+
 
   public Location getStart(){
     return start;
