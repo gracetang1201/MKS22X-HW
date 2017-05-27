@@ -1,150 +1,88 @@
-public class MazeSolver{
-
+public class MazeSolver2{
     private Maze board;
-    private boolean animated;
-
-    public MazeSolver(String filename){
+    private boolean ani;
+    public static void main (String[]args) {
+	MazeSolver2 a = new MazeSolver2("data3.txt", true);
+	a.solve(2);
+    }
+    public MazeSolver2(String filename){
 	this(filename, false);
     }
 
-    public MazeSolver(String filename, boolean animate){
+    public MazeSolver2(String filename, boolean animate){
 	board = new Maze(filename);
-	animated = animate;
+	ani=animate;;
     }
-
     public void solve(){
 	solve(1);
     }
-
-    public void solve(int x){
-	System.out.println(Maze.colorize(board.toString())); ///
-	
-	Frontier f;
-	boolean Astar;
-	
-	switch (x){
-	    
-	case 0: f = new FrontierStack();
-	    Astar = false;
-	    break;
-	    
-	case 1: f = new FrontierQueue();
-	    Astar = false;
-	    break;
-	    
-	case 2: f = new FrontierPriorityQueue();
-	    Astar = false;
-	    break;
-	    
-	case 3: f = new FrontierPriorityQueue();
-	    Astar = true;
-	    break;
-	    
-	default: throw new IllegalArgumentException();
-	    
+    public void solve(int style){
+	System.out.println(Maze.colorize(board.toString()));
+	Frontier fr;
+	boolean astar;
+	if(style == 0){
+	    fr = new FrontierStack();
+	    astar = false;
+	}else if(style == 1){
+	    fr = new FrontierQueue();
+	    astar = false;
+	}else if(style == 2){
+	    fr = new FrontierPriorityQueue();
+	    astar = false;
+	}else{
+	    fr = new FrontierPriorityQueue();
+	    astar = true;
 	}
-
-	f.add(board.getStart());
-
-	while (f.getSize() > 0){
-	    Location current = f.next();
-	    if(distCalc(current, board.getEnd()) == 0){
-		board.set(current.getRow(), current.getCol(), 'E');
-
-		while(current.getPrev() != null){
-		    current = current.getPrev();
-		    board.set(current.getRow(), current.getCol(), '@');
+	fr.add(board.getStart());
+	while(fr.getSize() > 0){
+	    Location curr = fr.next();
+	    if(dist(curr, board.getEnd()) == 0){
+		board.set(curr.getRow(), curr.getCol(), 'E');
+		while(!(curr.getPrev() == null)){
+		    curr = curr.getPrev();
+		    board.set(curr.getRow(), curr.getCol(), '@');
 		}
-
-		board.set(current.getRow(), current.getCol(), 'S');
-		System.out.println(this.toString());
+		board.set(curr.getRow(), curr.getCol(), 'S');
+		System.out.println(this);
 		return;
 	    }
-
 	    try{
-		if(board.get(current.getRow() + 1, current.getCol()) == ' '){
-		    int r = current.getRow() + 1;
-		    int c = current.getCol();
-		    f.add(new Location(r,
-				       c,
-				       current,
-				       distCalc(r,c,board.getStart()),
-				       distCalc(r,c,board.getEnd()),
-				       Astar));
-		    board.set(r,c,'?');
+		int[] poss = {1, -1};
+		for(int num : poss){
+		    if(board.get(curr.getRow() + num, curr.getCol()) == ' '){
+			int row = curr.getRow() + num;
+			int col = curr.getCol();
+			Location temp = new Location(row, col, curr, dist(row, col, board.getStart()), dist(row,col,board.getEnd()), astar);
+			fr.add(temp);
+			board.set(row,col, '?');
+		    }
+		    if(board.get(curr.getRow(), curr.getCol() + num) == ' '){
+			int row = curr.getRow();
+			int col = curr.getCol()+num;
+			Location temp = new Location(row, col, curr, dist(row, col, board.getStart()), dist(row,col,board.getEnd()),astar);
+			fr.add(temp);
+			board.set(row,col, '?');
+		    }
 		}
 	    }catch (IndexOutOfBoundsException e){}
-	    
-	    try{
-		if(board.get(current.getRow() - 1, current.getCol()) == ' '){
-		    int r = current.getRow() - 1;
-		    int c = current.getCol();
-		    f.add(new Location(r,
-				       c,
-				       current,
-				       distCalc(r,c,board.getStart()),
-				       distCalc(r,c,board.getEnd()),
-				       Astar));
-		    board.set(r,c,'?');
-		}
-	    }catch (IndexOutOfBoundsException e){}
-	    
-	    try{
-		if(board.get(current.getRow(), current.getCol() + 1) == ' '){
-		    int r = current.getRow();
-		    int c = current.getCol() + 1;
-		    f.add(new Location(r,
-				       c,
-				       current,
-				       distCalc(r,c,board.getStart()),
-				       distCalc(r,c,board.getEnd()),
-				       Astar));
-		    board.set(r,c,'?');
-		}
-	    }catch (IndexOutOfBoundsException e){}
-	    
-	    try{
-		if(board.get(current.getRow(), current.getCol() - 1) == ' '){
-		    int r = current.getRow();
-		    int c = current.getCol() - 1;
-		    f.add(new Location(r,
-				       c,
-				       current,
-				       distCalc(r,c,board.getStart()),
-				       distCalc(r,c,board.getEnd()),
-				       Astar));
-		    board.set(r,c,'?');
-		}
-	    }catch (IndexOutOfBoundsException e){}
-	    
-	    board.set(current.getRow(), current.getCol(), '.');
-	    System.out.println(this.toString());
+	    board.set(curr.getRow(), curr.getCol(), '.');
+	    System.out.println(this);
+	
 	}
-	
-
-	
     }
-
-    public int distCalc(Location curr, Location base){
-	return (Math.abs(base.getRow() - curr.getRow()) +
-		Math.abs(base.getCol() - curr.getCol()));
+    public int dist(Location to, Location from){
+	int ans = Math.abs(to.getRow() - from.getRow()) +Math.abs(to.getCol() - from.getCol());
+	return ans;
     }
-
-    public int distCalc(int r, int c, Location base){
-	return (Math.abs(base.getRow() - r) +
-		Math.abs(base.getCol() - c));
+    public int dist(int r, int c, Location to){
+	return(Math.abs(to.getRow() - r) + Math.abs(to.getCol() - c));
     }
-
     public String toString(){
-	if (animated) {
-	    return board.toString(100);
+	if(ani){
+	    return board.toString(50);
 	}
 	return board.toString();
     }
-
-    public static void main (String[]args) {
-	MazeSolver a = new MazeSolver("data3.txt", true);
-	a.solve(2);
-    }
-
+    
+    
 }
