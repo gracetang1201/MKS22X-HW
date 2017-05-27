@@ -2,7 +2,7 @@ public class MazeSolver{
     private Maze board;
     private boolean ani;
     public static void main (String[]args) {
-	MazeSolver a = new MazeSolver("data2.txt", true);
+	MazeSolver a = new MazeSolver("data3.txt", true);
 	a.solve(2);
     }
     public MazeSolver(String filename){
@@ -11,7 +11,7 @@ public class MazeSolver{
 
     public MazeSolver(String filename, boolean animate){
 	board = new Maze(filename);
-	ani=animate;;
+	ani=animate;
     }
     public void solve(){
 	solve(1);
@@ -38,6 +38,7 @@ public class MazeSolver{
 	    Location curr = fr.next();
 	    if(dist(curr, board.getEnd()) == 0){
 		board.set(curr.getRow(), curr.getCol(), 'E');
+		
 		while(!(curr.getPrev() == null)){
 		    curr = curr.getPrev();
 		    board.set(curr.getRow(), curr.getCol(), '@');
