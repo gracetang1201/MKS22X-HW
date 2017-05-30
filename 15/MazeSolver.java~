@@ -3,7 +3,7 @@ public class MazeSolver{
     private boolean ani;
     public static void main (String[]args) {
 	MazeSolver a = new MazeSolver("data2.txt", true);
-	a.solve(3);
+	a.solve(2);
     }
     public MazeSolver(String filename){
 	this(filename, false);
@@ -30,7 +30,7 @@ public class MazeSolver{
 	    fr = new FrontierPriorityQueue();
 	    astar = false;
 	}else{
-	    fr = new FrontierPriorityQueue(false);
+	    fr = new FrontierPriorityQueue();
 	    astar = true;
 	}
 	fr.add(board.getStart());
